@@ -16,7 +16,8 @@
     let count = 0;
     const button = document.getElementById('btn');
     button.addEventListener('click', () => {
-        alert('Hello World');
+        count++;
+        document.querySelector('span').textContent = `total click: ${count}`;
     });
 </script>
 
