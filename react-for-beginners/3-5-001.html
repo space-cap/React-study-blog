@@ -18,16 +18,22 @@
     const root = document.getElementById('root');
 
     function App() {
-        let [count, setCounter] = React.useState(0);
-        const click = () => {
-            setCounter(count + 1);
+        const [minutes, setMinutes] = React.useState();
+        const onChange = () => {
+            console.log("minutes", minutes);
         };
 
         return (
             <div>
                 <h1 className="hi">Super Converter</h1>
                 <label htmlFor="minutes">Minutes</label>
-                <input id="minutes" placeholder="Minutes" type="number" />
+                <input
+                    id="minutes"
+                    placeholder="Minutes"
+                    type="number"
+                    value={minutes}
+                    onChange={onChange}
+                />
                 <label htmlFor="hours">Hours</label>
                 <input id="hours" placeholder="Hours" type="number" />
 
