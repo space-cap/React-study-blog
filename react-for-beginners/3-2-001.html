@@ -16,8 +16,11 @@
 
 <script>
     const root = document.getElementById('root');
-    const span = React.createElement('span');
-    ReactDOM.render(span, root);
+    function App() {
+        return React.createElement('h1', null, 'Hello World');
+    }
+    ReactDOM.render(React.createElement(App), root);
+
 
 </script>
 
