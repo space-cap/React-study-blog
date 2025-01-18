@@ -19,8 +19,8 @@
 
     function App() {
         const [minutes, setMinutes] = React.useState();
-        const onChange = () => {
-            console.log("minutes", minutes);
+        const onChange = (event) => {
+            console.log(event.target.value);
         };
 
         return (
