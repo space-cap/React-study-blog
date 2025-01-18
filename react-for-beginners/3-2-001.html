@@ -16,11 +16,23 @@
 
 <script>
     const root = document.getElementById('root');
-    function App() {
-        return React.createElement('h1', null, 'Hello World');
-    }
-    ReactDOM.render(React.createElement(App), root);
 
+    function App() {
+        let [count, modifier] = React.useState(0);
+        const click = () => {
+            count++;
+            console.log(count);
+        };
+
+        return (
+            <div>
+                <h3>total click: {count}</h3>
+                <button onClick={click}>click me</button>
+            </div>
+        );
+    }
+
+    ReactDOM.render(React.createElement(App), root);
 
 </script>
 
