@@ -18,10 +18,9 @@
     const root = document.getElementById('root');
 
     function App() {
-        let [count, modifier] = React.useState(0);
+        let [count, setCounter] = React.useState(0);
         const click = () => {
-            count++;
-            console.log(count);
+            setCounter(count + 1);
         };
 
         return (
