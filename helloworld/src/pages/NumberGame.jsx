@@ -1,43 +1,47 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useRef } from 'react'
+import NumberGuessingGame from '../utils/NumberGuessingGame'
 
+/**
+ * 숫자 맞추기 게임 컴포넌트
+ * NumberGuessingGame 클래스를 사용하여 UI만 담당
+ */
 function NumberGame() {
-  const [targetNumber, setTargetNumber] = useState(Math.floor(Math.random() * 100) + 1)
-  const [guess, setGuess] = useState('')
-  const [message, setMessage] = useState('1부터 100 사이의 숫자를 맞춰보세요!')
-  const [attempts, setAttempts] = useState(0)
-  const [gameOver, setGameOver] = useState(false)
+  // 게임 인스턴스 생성 (컴포넌트 생명주기 동안 유지)
+  const gameRef = useRef(new NumberGuessingGame(1, 100))
+  
+  // UI 상태 관리
+  const [guess, setGuess] = useState('') // 사용자 입력값
+  const [message, setMessage] = useState('1부터 100 사이의 숫자를 맞춰보세요!') // 게임 메시지
+  const [gameState, setGameState] = useState(gameRef.current.getGameState()) // 게임 상태
 
+  /**
+   * 숫자 추측 제출 처리
+   */
   const handleSubmit = (e) => {
     e.preventDefault()
     const guessNumber = parseInt(guess)
     
-    if (isNaN(guessNumber) || guessNumber < 1 || guessNumber > 100) {
-      setMessage('1부터 100 사이의 숫자를 입력해주세요!')
-      return
+    // 게임 로직 처리
+    const result = gameRef.current.makeGuess(guessNumber)
+    
+    // UI 상태 업데이트
+    setMessage(result.message)
+    setGameState(gameRef.current.getGameState())
+    
+    // 유효한 입력인 경우에만 입력값 초기화
+    if (result.isValid) {
+      setGuess('')
     }
-
-    const newAttempts = attempts + 1
-    setAttempts(newAttempts)
-
-    if (guessNumber === targetNumber) {
-      setMessage(`정답입니다! ${newAttempts}번 만에 맞추셨네요!`)
-      setGameOver(true)
-    } else if (guessNumber < targetNumber) {
-      setMessage(`더 큰 숫자입니다! (시도: ${newAttempts}번)`)
-    } else {
-      setMessage(`더 작은 숫자입니다! (시도: ${newAttempts}번)`)
-    }
-
-    setGuess('')
   }
 
+  /**
+   * 게임 재시작
+   */
   const resetGame = () => {
-    setTargetNumber(Math.floor(Math.random() * 100) + 1)
+    gameRef.current.reset()
     setGuess('')
     setMessage('1부터 100 사이의 숫자를 맞춰보세요!')
-    setAttempts(0)
-    setGameOver(false)
+    setGameState(gameRef.current.getGameState())
   }
 
   return (
@@ -46,7 +50,7 @@ function NumberGame() {
       <h1>숫자 맞추기 게임</h1>
       <p>{message}</p>
       
-      {!gameOver ? (
+      {!gameState.isGameOver ? (
         <form onSubmit={handleSubmit}>
           <input
             type="number"
