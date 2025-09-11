@@ -42,19 +42,6 @@ function NumberGame() {
 
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>
-      <Link 
-        to="/" 
-        style={{ 
-          position: 'absolute', 
-          top: '20px', 
-          left: '20px',
-          textDecoration: 'none',
-          color: '#007bff',
-          fontSize: '16px'
-        }}
-      >
-        ← 홈으로
-      </Link>
       
       <h1>숫자 맞추기 게임</h1>
       <p>{message}</p>
@@ -75,24 +62,9 @@ function NumberGame() {
           </button>
         </form>
       ) : (
-        <div>
-          <button onClick={resetGame} style={{ padding: '10px 20px', fontSize: '16px', marginRight: '10px' }}>
-            새 게임 시작
-          </button>
-          <Link 
-            to="/" 
-            style={{
-              display: 'inline-block',
-              padding: '10px 20px',
-              backgroundColor: '#6c757d',
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '16px'
-            }}
-          >
-            홈으로 돌아가기
-          </Link>
-        </div>
+        <button onClick={resetGame} style={{ padding: '10px 20px', fontSize: '16px' }}>
+          새 게임 시작
+        </button>
       )}
     </div>
   )
